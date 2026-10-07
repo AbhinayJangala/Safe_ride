@@ -1,7 +1,9 @@
 package com.example.safe_ride.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.safe_ride.data.HomeUiState
+import com.example.safe_ride.location.LocationRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,20 +15,38 @@ class HomeViewModel : ViewModel() {
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     fun updateCurrentLocation(location: String) {
-        _uiState.update { it.copy(currentLocation = location) }
+        _uiState.update {
+            it.copy(currentLocation = location)
+        }
     }
 
     fun updateDestination(destination: String) {
-        _uiState.update { it.copy(destination = destination) }
+        _uiState.update {
+            it.copy(destination = destination)
+        }
     }
 
     fun startJourney() {
         if (_uiState.value.destination.isNotBlank()) {
-            _uiState.update { it.copy(journeyStarted = true) }
+            _uiState.update {
+                it.copy(journeyStarted = true)
+            }
         }
     }
 
     fun resetJourney() {
-        _uiState.update { it.copy(journeyStarted = false, destination = "") }
+        _uiState.update {
+            it.copy(
+                journeyStarted = false,
+                destination = ""
+            )
+        }
+    }
+
+    fun getCurrentLocation(context: Context) {
+        val locationRepository = LocationRepository(context)
+        locationRepository.getCurrentLocation { address ->
+            updateCurrentLocation(address)
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.safe_ride.data
 
 data class HomeUiState(
-    val currentLocation: String = "Current Location (GPS)",
+    val currentLocation: String = "Getting location...",
     val destination: String = "",
     val journeyStarted: Boolean = false
 )

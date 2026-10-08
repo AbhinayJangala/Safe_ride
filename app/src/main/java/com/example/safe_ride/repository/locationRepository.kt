@@ -1,4 +1,4 @@
-package com.example.safe_ride.location
+package com.example.safe_ride.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
